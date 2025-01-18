@@ -101,6 +101,7 @@ export default function Home() {
                 blockSize={8}
                 blockMargin={4}
                 style={{ maxWidth: "100%" }}
+                colorScheme="light"
                 className="w-full"
               />
             </div>
@@ -136,6 +137,7 @@ export default function Home() {
                 fontSize={12}
                 blockSize={8}
                 blockMargin={4}
+                colorScheme="light"
               />
             </div>
           </div>
