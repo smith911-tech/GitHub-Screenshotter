@@ -1,101 +1,146 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import GitHubCalendar from "react-github-calendar";
+import { toPng } from "html-to-image";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [username, setUsername] = useState("");
+  const [searchedUsername, setSearchedUsername] = useState("");
+  const [selectedGradient, setSelectedGradient] = useState("blue-purple");
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const gradients = {
+    "blue-purple": "from-blue-500 to-purple-600",
+    "green-teal": "from-green-400 to-teal-500", 
+    "orange-red": "from-orange-500 to-red-600",
+    "pink-rose": "from-pink-500 to-rose-500",
+    "indigo-violet": "from-indigo-500 to-violet-600",
+    "cyan-blue": "from-cyan-400 to-blue-500",
+    "amber-orange": "from-amber-400 to-orange-500"
+  };
+
+  const hoverGradients = {
+    "blue-purple": "hover:from-blue-600 hover:to-purple-700",
+    "green-teal": "hover:from-green-500 hover:to-teal-600",
+    "orange-red": "hover:from-orange-600 hover:to-red-700",
+    "pink-rose": "hover:from-pink-600 hover:to-rose-600",
+    "indigo-violet": "hover:from-indigo-600 hover:to-violet-700",
+    "cyan-blue": "hover:from-cyan-500 hover:to-blue-600",
+    "amber-orange": "hover:from-amber-500 hover:to-orange-600"
+  };
+
+  const downloadCalendar = async () => {
+    const element = document.getElementById("github-calendar");
+    if (element) {
+      const dataUrl = await toPng(element);
+      const link = document.createElement("a");
+      link.download = `${searchedUsername}-github-contributions.png`;
+      link.href = dataUrl;
+      link.click();
+    }
+  };
+
+  const handleSearch = () => {
+    setSearchedUsername(username);
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-4">
+      <h1
+        className={`text-4xl md:text-5xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r ${gradients[selectedGradient]} text-center`}
+      >
+        Github contribution screenshot
+      </h1>
+
+      <div className="flex flex-col sm:flex-row gap-4 mb-8 w-full max-w-md">
+        <input
+          type="text"
+          placeholder="Enter GitHub username"
+          className="p-3 w-full sm:w-72 text-gray-800 rounded-xl bg-white/90 backdrop-blur-sm border border-gray-200 focus:ring-2 focus:ring-blue-400 outline-none"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <button
+          onClick={handleSearch}
+          className={`px-6 py-3 bg-gradient-to-r ${gradients[selectedGradient]} ${hoverGradients[selectedGradient]} rounded-xl font-medium shadow-xl transition-all duration-300 transform hover:scale-[1.02] w-full sm:w-auto`}
+        >
+          Search
+        </button>
+      </div>
+
+      <div className="flex flex-wrap justify-center gap-3 mb-8">
+        {Object.keys(gradients).map((gradientName) => (
+          <button
+            key={gradientName}
+            onClick={() => setSelectedGradient(gradientName)}
+            className={`w-10 h-10 rounded-full bg-gradient-to-r ${
+              gradients[gradientName]
+            } ${selectedGradient === gradientName ? "ring-2 ring-white" : ""}`}
+          />
+        ))}
+      </div>
+
+      {searchedUsername && (
+        <div className="space-y-6 w-full max-w-max overflow-x-auto">
+          <div
+            className={`min-h-[400px] md:h-[700px] flex flex-col md:flex-row items-center justify-center bg-gradient-to-r ${gradients[selectedGradient]} p-4 md:px-10 shadow-black shadow-2xl`}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <div
+              className="p-4 md:p-10 rounded-2xl bg-gradient-to-br from-gray-800/90 to-gray-900/90 shadow-[0_0_60px_rgba(59,130,246,0.2)] backdrop-blur-lg border border-gray-700/50 h-fit w-full overflow-x-auto"
+              style={{
+                boxShadow: `
+                  0 0 100px rgba(59, 130, 246, 0.25), 
+                  0 0 50px rgba(147, 51, 234, 0.25),
+                  0 0 150px rgba(255, 255, 255, 0.05) inset`,
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+              }}
+            >
+              <GitHubCalendar
+                username={searchedUsername}
+                fontSize={12}
+                blockSize={8}
+                blockMargin={4}
+                style={{ maxWidth: "100%" }}
+                className="w-full"
+              />
+            </div>
+          </div>
+
+          <button
+            onClick={downloadCalendar}
+            className={`w-full py-3 bg-gradient-to-r ${gradients[selectedGradient]} ${hoverGradients[selectedGradient]} rounded-xl font-medium shadow-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl`}
           >
-            Read our docs
-          </a>
+            Download as Image
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      )}
+
+      {searchedUsername && (
+        <div className="fixed w-[800px] -left-[1000px]">
+          <div
+            className={`min-h-[400px] md:h-[700px] flex flex-col md:flex-row items-center justify-center bg-gradient-to-r ${gradients[selectedGradient]} p-4 md:px-10 shadow-black shadow-2xl`}
+            id="github-calendar"
+          >
+            <div
+              className="p-4 md:p-10 rounded-2xl bg-gradient-to-br from-gray-800/90 to-gray-900/90 shadow-[0_0_60px_rgba(59,130,246,0.2)] backdrop-blur-lg border border-gray-700/50 h-fit"
+              style={{
+                boxShadow: `
+                  0 0 100px rgba(59, 130, 246, 0.25), 
+                  0 0 50px rgba(147, 51, 234, 0.25),
+                  0 0 150px rgba(255, 255, 255, 0.05) inset`,
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+              }}
+            >
+              <GitHubCalendar
+                username={searchedUsername}
+                fontSize={12}
+                blockSize={8}
+                blockMargin={4}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
