@@ -108,7 +108,7 @@ export default function Home() {
 
           <button
             onClick={downloadCalendar}
-            className={`w-full py-3 bg-gradient-to-r ${gradients[selectedGradient]} ${hoverGradients[selectedGradient]} rounded-xl font-medium shadow-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl`}
+            className={`w-full py-3 bg-gradient-to-r ${gradients[selectedGradient]} ${hoverGradients[selectedGradient]} rounded-xl font-medium shadow-xl transition-all duration-300 transform  hover:shadow-2xl`}
           >
             Download as Image
           </button>
