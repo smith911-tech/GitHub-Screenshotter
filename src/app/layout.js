@@ -12,10 +12,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Github contribution screenshot",
+  title: "GitHub Screenshotter",
   description: "A tool to capture and share screenshots of GitHub contribution",
   author: "Joseph",
-  keywords: ["GitHub", "screenshot", "tool", "capture", "share", "contribution"],
+  keywords: [
+    "GitHub",
+    "screenshot",
+    "tool",
+    "capture",
+    "share",
+    "contribution",
+  ],
 };
 
 export default function RootLayout({ children }) {

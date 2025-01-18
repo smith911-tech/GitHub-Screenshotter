@@ -49,7 +49,7 @@ export default function Home() {
       <h1
         className={`text-4xl md:text-5xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r ${gradients[selectedGradient]} text-center`}
       >
-        Github contribution screenshot
+        GitHub Screenshotter
       </h1>
 
       <div className="flex flex-col sm:flex-row gap-4 mb-8 w-full max-w-md">
