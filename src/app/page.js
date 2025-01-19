@@ -161,7 +161,7 @@ export default function Home() {
 
       <div className="mt-4 text-center">
         <a
-          href="https://github.com/josephopio11/github-screenshotter"
+          href="https://github.com/smith911-tech/GitHub-Screenshotter"
           target="_blank"
           rel="noopener noreferrer"
           className={`inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r ${gradients[selectedGradient]} ${hoverGradients[selectedGradient]} rounded-xl font-medium shadow-xl transition-all duration-300 transform hover:scale-[1.02]`}
