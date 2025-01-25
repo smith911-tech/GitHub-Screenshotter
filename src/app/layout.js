@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,10 +30,20 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <meta
-          name="google-site-verification"
-          content="nD29tshy6v_FR2eopYjdeY36S65XJccsKVnFa_0YPYY"
-        />
+        <Script id="openpanel-init" strategy="beforeInteractive">
+          {`
+            window.op = window.op || function(...args) {
+              (window.op.q = window.op.q || []).push(args);
+            };
+            window.op('init', {
+              clientId: '1eba2285-3a01-4d0c-99c4-fab812650b47',
+              trackScreenViews: true,
+              trackOutgoingLinks: true,
+              trackAttributes: true,
+            });
+          `}
+        </Script>
+        <Script src="https://openpanel.dev/op1.js" defer async />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
