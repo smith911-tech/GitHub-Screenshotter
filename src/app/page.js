@@ -9,25 +9,42 @@ export default function Home() {
   const [searchedUsername, setSearchedUsername] = useState("");
   const [selectedGradient, setSelectedGradient] = useState("blue-purple");
 
-  const gradients = {
-    "blue-purple": "from-blue-500 to-purple-600",
-    "green-teal": "from-green-400 to-teal-500", 
-    "orange-red": "from-orange-500 to-red-600",
-    "pink-rose": "from-pink-500 to-rose-500",
-    "indigo-violet": "from-indigo-500 to-violet-600",
-    "cyan-blue": "from-cyan-400 to-blue-500",
-    "amber-orange": "from-amber-400 to-orange-500"
-  };
+const gradients = {
+  "blue-purple": "from-blue-500 to-purple-600",
+  "green-teal": "from-green-400 to-teal-500",
+  "orange-red": "from-orange-500 to-red-600",
+  "pink-rose": "from-pink-500 to-rose-500",
+  "indigo-violet": "from-indigo-500 to-violet-600",
+  "cyan-blue": "from-cyan-400 to-blue-500",
+  "amber-orange": "from-amber-400 to-orange-500",
+  "lime-green": "from-lime-400 to-green-500",
+  "red-yellow": "from-red-500 to-yellow-400",
+  "purple-pink": "from-purple-500 to-pink-500",
+  "teal-indigo": "from-teal-400 to-indigo-500",
+  "fuchsia-rose": "from-fuchsia-500 to-rose-500",
+  "sky-indigo": "from-sky-400 to-indigo-600",
+  "emerald-blue": "from-emerald-400 to-blue-500",
+  "gray-white": "from-gray-700 to-gray-300",
+};
 
-  const hoverGradients = {
-    "blue-purple": "hover:from-blue-600 hover:to-purple-700",
-    "green-teal": "hover:from-green-500 hover:to-teal-600",
-    "orange-red": "hover:from-orange-600 hover:to-red-700",
-    "pink-rose": "hover:from-pink-600 hover:to-rose-600",
-    "indigo-violet": "hover:from-indigo-600 hover:to-violet-700",
-    "cyan-blue": "hover:from-cyan-500 hover:to-blue-600",
-    "amber-orange": "hover:from-amber-500 hover:to-orange-600"
-  };
+const hoverGradients = {
+  "blue-purple": "hover:from-blue-600 hover:to-purple-700",
+  "green-teal": "hover:from-green-500 hover:to-teal-600",
+  "orange-red": "hover:from-orange-600 hover:to-red-700",
+  "pink-rose": "hover:from-pink-600 hover:to-rose-600",
+  "indigo-violet": "hover:from-indigo-600 hover:to-violet-700",
+  "cyan-blue": "hover:from-cyan-500 hover:to-blue-600",
+  "amber-orange": "hover:from-amber-500 hover:to-orange-600",
+  "lime-green": "hover:from-lime-500 hover:to-green-600",
+  "red-yellow": "hover:from-red-600 hover:to-yellow-500",
+  "purple-pink": "hover:from-purple-600 hover:to-pink-600",
+  "teal-indigo": "hover:from-teal-500 hover:to-indigo-600",
+  "fuchsia-rose": "hover:from-fuchsia-600 hover:to-rose-600",
+  "sky-indigo": "hover:from-sky-500 hover:to-indigo-700",
+  "emerald-blue": "hover:from-emerald-500 hover:to-blue-600",
+  "gray-white": "hover:from-gray-800 hover:to-gray-400",
+};
+
 
   const downloadCalendar = async () => {
     const element = document.getElementById("github-calendar");
@@ -45,7 +62,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white px-4 py-14">
       <h1
         className={`text-4xl md:text-5xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r ${gradients[selectedGradient]} text-center`}
       >
@@ -68,14 +85,19 @@ export default function Home() {
         </button>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-3 mb-8">
+      <div className="flex flex-wrap justify-center gap-4 mb-8">
         {Object.keys(gradients).map((gradientName) => (
           <button
             key={gradientName}
             onClick={() => setSelectedGradient(gradientName)}
-            className={`w-10 h-10 rounded-full bg-gradient-to-r ${
+            className={`w-12 h-12 rounded-full bg-gradient-to-r ${
               gradients[gradientName]
-            } ${selectedGradient === gradientName ? "ring-2 ring-white" : ""}`}
+            } ${
+              selectedGradient === gradientName
+                ? "ring-4 ring-offset-2 ring-white"
+                : "hover:ring-2 hover:ring-white"
+            } transition-all duration-200 transform hover:scale-110`}
+            title={gradientName.replace("-", " ")} 
           />
         ))}
       </div>
